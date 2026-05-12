@@ -3,11 +3,11 @@ import { parseCSV, normalizeRow, isActive, isScheduled, filterByTimeWindow, summ
 import { FileUpload, Toggle, StatCard, SplitBar, SectionHeader, AlertBanner } from './UI'
 
 // Night shift windows
-// First half:  16:45 – 00:00 (same day → next day midnight)
-// Second half: 00:01 – 05:00 (next day)
+// First half:  16:45 – 23:59 (same day)
+// Second half: 00:00 – 05:00 (next day)
 const NIGHT1_START = { hour: 16, minute: 45 }
 const NIGHT1_END = { hour: 23, minute: 59 }
-const NIGHT2_START = { hour: 0, minute: 1 }
+const NIGHT2_START = { hour: 0, minute: 0 }
 const NIGHT2_END = { hour: 5, minute: 0 }
 
 function analyzeHalf(csvText, showRate, showParcel, windowStart, windowEnd, label) {
@@ -164,13 +164,13 @@ export default function NightShift() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 24 }}>
         <div>
           <div style={{ fontFamily: 'Barlow Condensed', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--accent-purple)', marginBottom: 8 }}>
-            First Half · 4:45 PM – 12:00 AM
+            First Half · 4:45 PM – 11:59 PM
           </div>
           <FileUpload label="Upload First Half CSV" onFile={(t, n) => { setCsv1(t); setFileName1(n) }} fileName={fileName1} accent="var(--accent-purple)" />
         </div>
         <div>
           <div style={{ fontFamily: 'Barlow Condensed', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--accent-blue)', marginBottom: 8 }}>
-            Second Half · 12:01 AM – 5:00 AM
+            Second Half · 12:00 AM – 5:00 AM
           </div>
           <FileUpload label="Upload Second Half CSV" onFile={(t, n) => { setCsv2(t); setFileName2(n) }} fileName={fileName2} accent="var(--accent-blue)" />
         </div>
@@ -202,8 +202,8 @@ export default function NightShift() {
 
       {/* Two halves side by side */}
       <div style={{ display: 'grid', gridTemplateColumns: half1 && half2 ? '1fr 1fr' : '1fr', gap: 16, marginBottom: 20 }}>
-        {half1 && <HalfPanel data={half1} showRate={showRate} showParcel={showParcel} accent="var(--accent-purple)" label="First Half" window="16:45–00:00" />}
-        {half2 && <HalfPanel data={half2} showRate={showRate} showParcel={showParcel} accent="var(--accent-blue)" label="Second Half" window="00:01–05:00" />}
+        {half1 && <HalfPanel data={half1} showRate={showRate} showParcel={showParcel} accent="var(--accent-purple)" label="First Half" window="16:45–23:59" />}
+        {half2 && <HalfPanel data={half2} showRate={showRate} showParcel={showParcel} accent="var(--accent-blue)" label="Second Half" window="00:00–05:00" />}
       </div>
 
       {/* Combined total */}

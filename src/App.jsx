@@ -117,7 +117,7 @@ export default function App() {
                 04:45 PM – 05:00 AM
               </div>
               <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                Upload two files. First half (16:45–00:00) + Second half (00:01–05:00). Shows each half and combined total.
+                Upload two files. First half (16:45–23:59) + Second half (00:00–05:00). Shows each half and combined total.
               </div>
             </button>
           </div>
